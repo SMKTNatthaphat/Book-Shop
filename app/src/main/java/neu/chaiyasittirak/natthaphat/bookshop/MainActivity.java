@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         private String urlString;
         private boolean statusABooLean = true;
         private String truePasswordString;
+        private String nameLodingString;
 
 
         public MySynchronize(Context context, String urlString) {
@@ -91,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
                     if (userString.equals(jsonObject.getString("User"))) {
                         statusABooLean = false;
                         truePasswordString = jsonObject.getString("Password");
+                        nameLodingString = jsonObject.getString("Name");
+
 
 
 
@@ -98,13 +101,20 @@ public class MainActivity extends AppCompatActivity {
 
                 }//for
 
+                //CheckUser
                 if (statusABooLean) {
                     DogAlert dogAlert = new DogAlert();
                     dogAlert.myDialog(context,"ไม่มี User นี้",
                             "ไม่มี"+ userString + "ในฐานข้อมูลของเรา");
                 } else if (passwordString.equals(truePasswordString)) {
                     // Password True
+
+                    Intent intent = new Intent(context, BookActicity.class);
+                    intent.putExtra("Name", nameLodingString);
+                    startActivity(intent);
+
                     Toast.makeText(context, "Welcome User" , Toast.LENGTH_SHORT).show();
+                    finish();
                 } else {
                     // Password False
                     DogAlert dogAlert = new DogAlert();
